@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<meta name="description" content="">
 		<meta name="keywords" content="">
 		<title>Bootstrap 101 Template</title>
@@ -22,6 +22,33 @@
 	</head>
 	<body>
 		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					StatWatch Logo
+				</div>
+				<div class="col-md-3">
+					Refresh On
+				</div>
+				<div class="col-md-3">
+					Logged in as StatWatch Project Admin<br>
+					<a href="#">Logout</a> | <a href="#">Settings</a>
+				</div>
+				<div class="col-md-3">DRB Systems Logo</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<nav class="navbar navbar-default" role="navigation">
+						<ul class="nav nav-tabs nav-justified">
+							<li class="active"><a href="#">Currently</a></li>
+							<li><a href="#">Sales</a></li>
+							<li><a href="#">Labor</a></li>
+							<li><a href="#">Compare</a></li>
+							<li><a href="#">Almanac</a></li>
+							<li><a href="#">Multi-Site</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
 			<div class="jumbotron">
 				<h1>Hello, world!</h1>
 		
