@@ -1,4 +1,20 @@
-body {
-	background: #d9dde0 url("../../images/site-bg.gif") left top repeat-x;
-	
+/*@import 'reset';*/
+h3 { font-weight: bold; }
+
+body { background: #3a424c url("../../images/site-bg.gif") left top repeat-x; }
+
+.main-data-wrapper { width: 100%; padding-top: 20px; margin-left: 0; background-color: #dbeef8; }
+
+.navbar.main { margin-bottom: -2px; }
+
+.navbar.sub-nav { background-image: none; -webkit-box-shadow: none; -moz-box-shadow: none; -ms-box-shadow: none; -o-box-shadow: none; box-shadow: none; background-color: #dbeef8; }
+
+.nav > li > a:hover { background-color: white; border-bottom: 1px solid white; }
+
+.large-table-wrapper h3 { font-size: 1.2em; color: #3a424c; padding: 0 1px 10px 1px; }
+
+/*
+@mixin border-radius($radius) { -webkit-border-radius: $radius; -moz-border-radius: $radius; -ms-border-radius: $radius; -o-border-radius: $radius; border-radius: $radius;
 }
+.box { @include border-radius(10px);}
+*/
