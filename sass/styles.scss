@@ -2,7 +2,8 @@
 
 $dark-blue: #3A424C;
 $light-blue: #DBEEF8;
-$dark-green: #6cc644;
+$green: #6cc644;
+$dark-green: darken($green, 10);
 $grey: #eee;
 $white: #fff;
 $black: #000;
@@ -39,7 +40,39 @@ body {
 		color: $dark-blue;
 		padding: 0 1px 10px 1px;
 	}
+  .wrap-services {
+    .panel-heading {
+      padding-top: 2px;
+      padding-bottom: 2px;
+      span {
+        font-weight: bold;
+      }
+    }
+    .btn-select {
+      padding: 2px 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .btn-option {
+      width: 130px;
+      margin: 0 0px 6px 10px;
+      font-size: 9px;
+      text-transform: uppercase;
+    }
+    .btn-success {
+      background-color: $green;
+      border-color: $green;
+      background-image: linear-gradient(to bottom, $green 0, $green 100%);
+    }
+     .btn-success:hover {
+        background-color: $dark-green;
+        border-color: $dark-green;
+        background-image: linear-gradient(to bottom, $dark-green 0, $dark-green 100%);
+     }
+  }
 }
+
 /*
 @mixin border-radius($radius) {
      -webkit-border-radius: $radius;

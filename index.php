@@ -1,3 +1,9 @@
+<?php require('app/db.php'); 
+
+	$siteID = 'NCA';
+	$services = $db->query("SELECT profitCenter, serviceID, serviceName from allservices WHERE siteID = '{$siteID}' GROUP BY profitCenter ASC");
+	$services->setFetchMode(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -77,6 +83,54 @@
 	                		Top 10 Services sold shown by default. Select 'Custom' to use a custom 10 list.
                 		</h3>
                 		<br>
+                		<div class="wrap-services">
+                			<?php  
+                				while ($service = $services->fetch()) {
+                					//echo $service['profitCenter'] .'<br>';
+									$profitCenterIDs = $service['profitCenter'];
+									foreach ($profitCenterIDs as $profitCenterID) {
+                								
+                							function profitCenterIDtoName($param) {
+                								switch ($param) {
+													case 1: $profitCenterName = 'wash'; 	break;
+													case 2: $profitCenterName = 'store'; 	break;
+													case 3: $profitCenterName = 'lube'; 	break;
+													case 4: $profitCenterName = 'detail'; 	break;
+													case 5: $profitCenterName = 'express-detail'; break;
+												}	
+													
+                								return $profitCenterName;
+                							}
+                						
+	                						echo $profitCenterName = profitCenterIDtoName($profitCenterID);
+								
+                					}
+                				}
+                			?>
+                			<?php $services = array('Wash', 'Store', 'Lube', 'Detail'); ?>
+                			
+                			<?php foreach ($services as $service) { ?>
+                				
+	                			<div class="panel panel-default">
+	                				<div class="panel-heading clearfix">
+	                					<span><?php echo $service; ?></span>
+	                					<div class="btn-group pull-right">
+	                						<button type="button" class="btn btn-default btn-select">Custom</button>
+	                						<button type="button" class="btn btn-success btn-select">Default</button>
+	                					</div>
+	                				</div>
+	                				<div class="panel-body">
+	                					<?php 
+				                			
+											while ($profitCenter = $profitCenters->fetch()) {
+												echo "<button type=\"button\" id=\"{$row['serviceID']}\" class=\"btn btn-default btn-option\">{$row['serviceName']}</button>";
+											}
+			                			?>
+	                				</div>
+	                			</div>
+                			<?php } ?>
+                			
+                		</div><!--/wrap-services-->
                 		<div class="wrap-services">
                 			<div id="sitegroup-accordion" style="clear:both;" class="ui-accordion ui-wedget ui-helper-reset" role="tablist">
 								<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-header-active ui-state-active ui-corner-top ui-accordion-icons" id="pc-settings-wash" role="tab" aria-controls="ui-accordion-sitegroup-accordion-panel-0" aria-selected="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span><a href="#">wash</a></h3>
