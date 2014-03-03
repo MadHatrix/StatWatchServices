@@ -3,9 +3,9 @@
 	include('app/functions.php');
 
 	$siteID = 'NCA';
-	$services = $db->query("SELECT profitCenter, serviceID, serviceName from allservices WHERE siteID = '{$siteID}' ORDER BY profitCenter ASC");
-	$services->setFetchMode(PDO::FETCH_ASSOC);
-	$pc = array();
+	$serviceResults = $db->query("SELECT profitCenter, serviceID, serviceName from allservices WHERE siteID = '{$siteID}' ORDER BY profitCenter ASC");
+	$serviceResults->setFetchMode(PDO::FETCH_ASSOC);
+
 	include('assets/header.php');
 ?>
 
@@ -27,80 +27,77 @@
                 		<br>
                 		<div class="wrap-services">
                 			<?php
-								//$services = array('Wash', 'Store', 'Lube', 'Detail');
-								//$profitCenter[] = array();
-                				while ($service = $services->fetch()) {
-									// $profitCenter[] = array(
-										// 'profitCenterID' => $service['profitCenter'],
-										// 'serviceID' => $service['serviceID'],
-										// 'serviceName' => $service['serviceName']
-									// );
-									$profitCenter[] = $service;
-								}
-								$groupArray = array();
-								foreach($profitCenter as $key=>$val) {
-									$groupArray[$val['profitCenter']][] = $val['serviceName'];
-								}
 
-								foreach($groupArray as $key=>$val) {
-									echo '<strong>'.$key.'</strong><br>';
-									foreach($val as $k=>$v) {
-										echo '-'.$v.'<br>';
-									}
-								}
-            						// if ($service['profitCenter'] == 1){
-										// echo '<strong>' . profitCenterIDtoName($service['profitCenter']) . '</strong><br>';
-										// echo $service['serviceName'] . '<br>';
-									// }
-
-
-                					// for($i=0;$i<$total;$i++){
-	                					// if ($service['profitCenter'] == $i) {
-	                						// echo $service['profitCenter'];
-	                						// foreach($service as $serviceName ) {
-	                							// echo $serviceName.'<br>';
-	                						// }
-	                						// //$array['wash'][] = array($service['serviceID'], $service['serviceName']);
-	                					// }
-									// }
-                					// }
-                					// $array[] = array(
-                						// 'profitCenter' => $service['profitCenter'],
-										// 'serviceID' => $service['serviceID'],
-										// 'serviceName' => $service['serviceName']
-									// );
-									//$array[] = $service;
-
-                					// $group_array = array();
-                					// foreach($service as $key=>$val) {
-                						// $group_array[$service['profitCenter']][] = $service['serviceName'];
-                						//echo $service['profitCenter'];
-									// }
-// //
-                					// foreach ($group_array as $key=>$val) {
-                						//echo '<b>'.$key.'</b><br>';
-										// foreach($val as $k=>$v) {
-											// echo '-'.$v.'<br/>';
-										// }
-                					// }
-                				//}
-								// /echo '<pre>'.print_r($array['wash']).'</pre>';
+								$stmt = $db->prepare("SELECT profitCenter, serviceID, serviceName FROM allservices WHERE siteID = :siteID ORDER BY profitCenter ASC");
+								$stmt->bindParam(":siteID", $siteID);
+								$stmt->execute();
 								/*
-                				while ($service = $services->fetch()) {
-                					//echo $service['profitCenter'] .'<br>';
-									$profitCenterIDs = $service['profitCenter'];
-									foreach ($profitCenterIDs as $profitCenterID) {
-									echo $profitCenterName = profitCenterIDtoName($profitCenterID);
+								$profitCenter = -1;
+								$lines = array();
+								while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+									$data = array_map("htmlspecialchars", $data); // sanitize data for HTML output
+									if ($profitCenter != $data["profitCenter"]) {
+										$profitCenter = $data["profitCenter"];
+										//list($profitCenter) = explode("")
+										$lines[] = (count($lines) > 0 ? "</ul>\n" : "") . "<h2>" . $profitCenter . "</h2>\n<ul>";
+									}
+									$lines[] = "\t<li>{$data["serviceID"]} - {$data["serviceName"]}</li>";
+								}
+								echo implode("\n", $lines) . "\n</ul>";
+*/
+							?>
+							<?php
+								$current_type = 'not_a_string';
+								while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+									if ($current_type !== $data['profitCenter']) {
+										echo '<h3>' . htmlspecialchars($data['profitCenter']) . '</h3>';
+										$current_type = $data['profitCenter'];
+									}
+									// echo '<p>' . htmlspecialchars($data['serviceID'])
+									printf('<p>' . htmlspecialchars($data['serviceID']) . htmlspecialchars($data['serviceName']) . '</p>');
+								}
+							?>
 
-                					}
-                				} */ ?>
-                			<?php  ?>
+                			<form>
+                			<?php
+								$profitCenters = array();
+                				while ($services = $serviceResults->fetch()) {
+									// $profitCenter[] = array( 'profitCenterID' => $service['profitCenter'], 'serviceID' => $service['serviceID'], 'serviceName' => $service['serviceName'] );
+									$profitCenters[] = $services;
+								}
+								$formatProfitCenters = array();
+								/*?><pre><?php print_r($profitCenters); ?></pre><?php*/
+								foreach($profitCenters as $profitCenter) {
+									$formatProfitCenters[$profitCenter['profitCenter']][] = array($profitCenter['serviceID']=>$profitCenter['serviceName']);
+									//$formatProfitCenters[$val['profitCenter']][] = array($val['serviceID']=>$val['serviceName']);
+								}
+								/*?><pre><?php print_r($formatProfitCenters); ?></pre><?php*/
+								foreach($formatProfitCenters as $profitCenter=>$profitCenterValues) { ?>
+									<div class="panel panel-default" id="pc<?php echo $profitCenter; ?>">
+										<div class="panel-heading clearfix"><span><?php echo profitCenterTitle($profitCenter); ?></span>
+											<div class="btn-group pull-right">
+		                						<button type="button" class="btn btn-default btn-select">Custom</button>
+		                						<button type="button" class="btn btn-success btn-select">Default</button>
+		                					</div>
+
+										</div><?php
+										foreach($profitCenterValues as $key=>$services) {
+											foreach($services as $serviceID=>$serviceName){
+												echo "<button type=\"button\" name=\"{$serviceID}\" id=\"{$serviceID}\" class=\"btn btn-option btn-default\">{$serviceName}</button>";
+												echo "<input type=\"checkbox\" name=\"{$serviceID}\" id=\"{$serviceID}\" class=\"hidden-checkbox\" >";
+											}
+										} ?>
+									</div><?php
+								}
+            				?>
+
+
 
                 			<?php foreach ($services as $service) { ?>
 
 	                			<div class="panel panel-default">
 	                				<div class="panel-heading clearfix">
-	                					<span><?php echo $service; ?></span>
+	                					<span><?php //echo $service; ?></span>
 	                					<div class="btn-group pull-right">
 	                						<button type="button" class="btn btn-default btn-select">Custom</button>
 	                						<button type="button" class="btn btn-success btn-select">Default</button>
@@ -108,16 +105,16 @@
 	                				</div>
 	                				<div class="panel-body">
 	                					<?php
-
-											while ($profitCenter = $profitCenters->fetch()) {
-												echo "<button type=\"button\" id=\"{$row['serviceID']}\" class=\"btn btn-default btn-option\">{$row['serviceName']}</button>";
-											}
+										//while ($profitCenter = $profitCenters->fetch()) {
+											//echo "<button type=\"button\" id=\"{$row['serviceID']}\" class=\"btn btn-default btn-option\">{$row['serviceName']}</button>";
+										//}
 			                			?>
 	                				</div>
 	                			</div>
                 			<?php } ?>
-
+							</form>
                 		</div><!--/wrap-services-->
+                		<?php /*
                 		<div class="wrap-services">
                 			<div id="sitegroup-accordion" style="clear:both;" class="ui-accordion ui-wedget ui-helper-reset" role="tablist">
 								<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-header-active ui-state-active ui-corner-top ui-accordion-icons" id="pc-settings-wash" role="tab" aria-controls="ui-accordion-sitegroup-accordion-panel-0" aria-selected="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span><a href="#">wash</a></h3>
@@ -235,20 +232,20 @@
                 	</div>
                 </div>
             </div>
-
+				*/?>
 			<div class="jumbotron">
 				<h1>Hello, world! - tes</h1>
 			</div>
 
 		</div><!--/container-->
-		<?php /*
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="js/bootstrap.min.js"></script>
-		*/ ?>
+		<!-- <script src="assets/js/bootstrap.js"></script> -->
+
 	    <!-- Latest compiled and minified JavaScript -->
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+		<script src="assets/js/site.js"></script>
 
 	<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 	</body>

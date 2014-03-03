@@ -42,17 +42,26 @@ body {
 	}
   .wrap-services {
     .panel-heading {
-      padding-top: 2px;
-      padding-bottom: 2px;
-      span {
-        font-weight: bold;
+        margin-bottom: 6px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+
+        span {
+            position: relative;
+            top: 5px;
+            font-weight: bold;
+        }
       }
-    }
-    .btn-select {
-      padding: 2px 8px;
-      font-size: 10px;
-      text-transform: uppercase;
-      font-weight: bold;
+
+    .btn-group {
+        margin-top: 5px;
+        padding-bottom: 5px;
+        .btn-select {
+            padding: 2px 8px;
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
     }
     .btn-option {
       width: 130px;
