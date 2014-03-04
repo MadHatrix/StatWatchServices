@@ -23,17 +23,15 @@
 	<body>
 		<div class="container">
 			<div class="row">
+				<div class="col-md-3 statwatch-logo"></div>
 				<div class="col-md-3">
-					StatWatch Logo
+					<!-- Refresh On -->
 				</div>
-				<div class="col-md-3">
-					Refresh On
+				<div class="col-md-4">
+					<!-- Logged in as StatWatch Project Admin<br>
+					<a href="#">Logout</a> | <a href="#">Settings</a> -->
 				</div>
-				<div class="col-md-3">
-					Logged in as StatWatch Project Admin<br>
-					<a href="#">Logout</a> | <a href="#">Settings</a>
-				</div>
-				<div class="col-md-3">DRB Systems Logo</div>
+				<div class="col-md-2 drb-logo"></div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">

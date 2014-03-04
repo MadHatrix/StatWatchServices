@@ -1,12 +1,14 @@
 <?php
 
 	// All date and time columns shall be INT UNSIGNED NOT NULL, and shall store a Unix timestamp in UTC.
-	if ($_SERVER['HTTP_HOST'] == 'localhost') {
+	//if ($_SERVER['HTTP_HOST'] == 'localhost') {
 		$host = 'localhost';
 		$dbname = 'statwatch';
 		$user = 'root';
 		$pass = '';
-	}
+	//} else {
+		
+	//}
 	try {	
 		$db = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
 	}

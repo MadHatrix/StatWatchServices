@@ -7,16 +7,39 @@ $dark-green: darken($green, 10);
 $grey: #eee;
 $white: #fff;
 $black: #000;
+.statwatch-logo {
+    margin: 10px 0 10px 30px;
+    display: block;    
+    background: url('../../images/statwatch-logo-lighter.png') no-repeat;
+    width: 167px;
+    height: 53px;
+}
+.drb-logo {    
+    margin-top: 14px; 
+    display: block;
+    background: url('../../images/drb-logo.png') no-repeat;
+    width: 183px;
+    height: 53px;
+}
 h3 { font-weight: bold; }
 
 body {
-    background: $dark-blue url("../../images/site-bg.gif") left top repeat-x;
+    // background: $dark-blue url("../../images/site-bg.gif") left top repeat-x;
+    background: $dark-blue url("../../images/login-bg.gif") center top no-repeat;
 }
 .main-data-wrapper {
     width: 100%;
     padding-top: 20px;
     margin-left: 0;
     background-color: $light-blue;
+    border-radius: 4px;
+    padding-bottom: 30px;
+    .services-section {
+        margin-top:-27px;
+        margin-left: 15px; 
+        width: 97%; 
+        background-color: $white;         
+    }
 }
 .navbar.main {
     margin-bottom: -2px;
@@ -29,6 +52,7 @@ body {
     -o-box-shadow: none;
     box-shadow: none;
     background-color: $light-blue;
+    border: none;
 }
 .nav>li>a:hover {
     background-color: $white;
@@ -39,6 +63,9 @@ body {
 		font-size: 1.2em;
 		color: $dark-blue;
 		padding: 0 1px 10px 1px;
+	}
+	#message {
+	  display: none;
 	}
   .wrap-services {
     .panel-heading {
@@ -52,7 +79,9 @@ body {
             font-weight: bold;
         }
       }
-
+    .default-services {
+      display: none;
+    }
     .btn-group {
         margin-top: 5px;
         padding-bottom: 5px;
@@ -65,7 +94,7 @@ body {
     }
     .btn-option {
       width: 130px;
-      margin: 0 0px 6px 10px;
+      margin: 0 0px 6px 7px;
       font-size: 9px;
       text-transform: uppercase;
     }
@@ -73,12 +102,16 @@ body {
       background-color: $green;
       border-color: $green;
       background-image: linear-gradient(to bottom, $green 0, $green 100%);
+      text-shadow: none;
     }
-     .btn-success:hover {
+    .btn-success:hover {
         background-color: $dark-green;
         border-color: $dark-green;
         background-image: linear-gradient(to bottom, $dark-green 0, $dark-green 100%);
-     }
+    }
+    .hidden-checkbox {
+        display: none;
+    }
   }
 }
 
